@@ -1,8 +1,9 @@
 $(document).ready(function() {
 //  alert('hello');
-
-var currentMonth = moment().format('YYYY-MM');
-console.log(currentMonth);
+actualDate = moment( '2018-' + '01-' + '01' );
+days = actualDate.daysInMonth();
+console.log(actualDate);
+console.log(days);
 
 $.ajax(
   {

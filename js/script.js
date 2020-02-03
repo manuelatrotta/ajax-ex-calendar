@@ -4,6 +4,8 @@ actualDate = moment( '2018-' + '01-' + '01' );
 days = actualDate.daysInMonth();
 console.log(actualDate);
 console.log(days);
+actualMonth = actualDate.format('MMMM');
+console.log(actualMonth);
 
 $.ajax(
   {

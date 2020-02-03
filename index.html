@@ -15,11 +15,20 @@
   <body>
 
     <div class="calendar">
-      <h1></h1>
-      <ul class="">
-        <li></li>
-      </ul>
+      <button type="button" name="button">Prev</button>
+     <button type="button" name="button">Next</button>
+     <div class="container"></div>
+     <h1 class="actualMonth"></h1>
+     <ul class="days">
 
+     </ul>
+
+      <script id="entry-template" type="text/x-handlebars-template">
+        <ul class="">
+        <li class="">{{date}}</li>
+        <li class="">{{name}}</li>
+      </ul>
+      </script>
     </div>
     <script src="js/script.js" charset="utf-8"></script>
 

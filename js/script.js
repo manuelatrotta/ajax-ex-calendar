@@ -33,7 +33,10 @@ $(document).ready(function () {
   //richiamo le funzioni sia per le festività e il mese. Cambia il mese nell'h1 e i giorni relativi al mese corrente
     var thisMonth = $('h1').attr('data-this-month');
     var date = moment(thisMonth).add(1, 'months');
-    console.log(date);
+    if (thisMonth =='2018-12') {
+      alert('stop');
+      var date = moment(thisMonth).subtract(11, 'months');
+    }
 
     printMonth(date);
     printHoliday(date);
@@ -42,10 +45,13 @@ $(document).ready(function () {
   $('#prev').click(function () {
     var thisMonth = $('h1').attr('data-this-month');
     var date = moment(thisMonth).subtract(1, 'months');
-    console.log(date);
-//richiamo funzioni stampa festività e mese
+    if(thisMonth=='2018-01') {
+      alert('stop');
+      thisMonth ='2018-01'
+    }
     printMonth(date);
     printHoliday(date);
+//richiamo funzioni stampa festività e mese
   });
 
 });

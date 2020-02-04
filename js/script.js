@@ -19,11 +19,19 @@ $.ajax(
     'url':'https://flynn.boolean.careers/exercises/api/holidays?year=2018&month=0',
     'method': 'GET',
     'data': {
+      //year è un parametro fissato visto che ci interessa l'anno 2018
       year: 2018,
       month : 0,
     },
-    'success': function(date,stato) {
+    'success': function(date, state) {
       console.log(date.response);
+      var redDays = date.response;
+      for (var i = 0; i < redDays.length; i++) {
+        $('li').each(function () {
+          if (redDays[i].date == $(this).attr('date'))
+          $(this).addClass('red');
+        });
+      }
     },
     'error': function (request, state, errors) {
       alert('error' + errors);

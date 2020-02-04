@@ -1,35 +1,35 @@
-<!DOCTYPE html>
+<DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <!--moment-->
-    <script src="https://momentjs.com/downloads/moment.min.js" charset="utf-8"></script>
-    <!--handlebars-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.2/handlebars.min.js" charset="utf-8"></script>
-    <!--jquery-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <!--mystyle-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.2/handlebars.js" integrity="sha256-N5vR06TQIR+YD8oS0yndB1pu/EITeijW52dwezEq7/g=" crossorigin="anonymous"></script>
+    <script src="https://momentjs.com/downloads/moment.js"></script>
     <link rel="stylesheet" href="css/style.css">
     <title>calendar</title>
   </head>
   <body>
 
-    <div class="calendar">
-      <button type="button" name="button">Prev</button>
-     <button type="button" name="button">Next</button>
-     <div class="container"></div>
-       <h1 class="actualMonth"></h1>
-         <ul class="days">
+  <section class="calendar">
 
-         </ul>
+    <button type="button" name="button">prev</button>
+    <button type="button" name="button">next</button>
+    <h2 class="month">January</h2>
 
-      <script id="entry-template" type="text/x-handlebars-template">
-        <ul class="festivity">
-        <li date={{attr}}>{{date}}</li>
-        <li>{{name}}</li>
-      </ul>
-      </script>
-    </div>
+    <ul class="days">
+
+    </ul>
+
+    <script id="entry-template" type="text/x-handlebars-template">
+
+      <li data={{attr}}>
+        <span>{{data}}</span>
+        <span>{{month}}</span>
+      </li>
+
+    </script>
+    </section>
+
     <script src="js/script.js" charset="utf-8"></script>
 
   </body>

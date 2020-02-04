@@ -11,24 +11,23 @@
   <body>
 
   <section class="calendar">
+    <header>
+    <button id="prev">Prev</button>
+    <h1></h1>
+    <button id="next">Next</button>
+  </header>
 
-    <button type="button" name="button">prev</button>
-    <button type="button" name="button">next</button>
-    <h2 class="month">January</h2>
+  <ul class="days">
+  </ul>
 
-    <ul class="days">
-
-    </ul>
-
-    <script id="entry-template" type="text/x-handlebars-template">
-
-      <li data={{attr}}>
-        <span>{{data}}</span>
-        <span>{{month}}</span>
+  <script id="entry-template" type="text/x-handlebars-template">
+      <li class="day" data-date-complete="{{dateComplete}}">
+        <span class="data">{{day}} {{month}}</span> <span class="nome-festivita"></span>
+        <!-- <span class="date-complete">{{dateComplete}}</span> -->
       </li>
+  </script>
 
-    </script>
-    </section>
+  </section>
 
     <script src="js/script.js" charset="utf-8"></script>
 

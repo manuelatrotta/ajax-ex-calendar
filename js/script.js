@@ -1,8 +1,5 @@
-
+// variabili con funzionalità moment.js
 //actualDate = moment( '2018-' + '01-' + '01' );
-//  days = actualDate.daysInMonth();
-//  console.log(actualDate);
-//  console.log(days);
 // actualMonth = actualDate.format('MMMM');
 //  console.log(actualMonth);
 //  var source = $('#entry-template').html();
@@ -14,46 +11,112 @@
 //  $('.actualMonth').append(actualMonth);
 
 
-$(document).ready(function() {
-  //month = 1 per conteggio che parte da 1 e arriva a 12 mesi
-  var month = 1;
-  var url = 'https://flynn.boolean.careers/exercises/api/holidays?year=2018&month='+ (month-1);
-  calcMonths(month);
-
-  $.ajax(
+$(document).ready(function () {
+//variabile yaer è fissa a 2018
+  var thisMonth = 0;
+  var year = 2018;
+  var baseMonth = moment(
     {
-    'url': url ,
-    'method': "GET",
-    'success': function(data) {
-      for (var i = 0; i < data.response.length; i++) {
-        $('li').each(function() {
-          if (data.response[i].date == $(this).attr('data')) {
-            $(this).addClass('red');
-          }
-        });
-      };
-    },
-    'error': function (richiesta, stato, errori) {
-      alert("Alert: " + errore);
+      year: year,
+      month: thisMonth
     }
-  }
   );
 
+  // console.log(baseMonth.format('MMMM'));
+  // console.log(baseMonth.format('YYYY-MM'));
+  //richiamo funzioni stamap mese e festività
+  printMonth(baseMonth);
+  printHoliday(baseMonth);
+
+  // cliccando su next si va avanti di un mese utilizzando add
+  $('#next').click(function () {
+  //richiamo le funzioni sia per le festività e il mese. Cambia il mese nell'h1 e i giorni relativi al mese corrente
+    var thisMonth = $('h1').attr('data-this-month');
+    var date = moment(thisMonth).add(1, 'months');
+    console.log(date);
+
+    printMonth(date);
+    printHoliday(date);
+  });
+//cliccando su prev si torna indietro di un mese con subtract
+  $('#prev').click(function () {
+    var thisMonth = $('h1').attr('data-this-month');
+    var date = moment(thisMonth).subtract(1, 'months');
+    console.log(date);
+//richiamo funzioni stampa festività e mese
+    printMonth(date);
+    printHoliday(date);
+  });
 
 });
 
-// funzioni
-function calcMonths(month) {
-  var daysMonth = moment('2018-' + month).daysInMonth();
-  console.log(daysMonth);
-  for (var i = 0; i < daysMonth; i++) {
+// FUNCTIONs
+//funzione che stampa i giorni
+function printMonth(month) {
+  $('.days').html('');
+  //inserisco h1 dinamico
+  $('h1').text(month.format('MMMM YYYY'));
+  $('h1').attr('data-this-month', month.format('YYYY-MM'));
+
+  //daysInMonth trova i giorni nel mese
+  var daysInMonth = month.daysInMonth();
+
+  // faccio un ciclo che parte da 1 fino ai giorni trovati da daysInMonth
+  for (var i = 1; i <= daysInMonth ; i++) {
+    // console.log(i);
+
     var source = $('#entry-template').html();
     var template = Handlebars.compile(source);
     var context = {
-      data : i+1,
-      month : moment().month(month -1).format('MMM'),
+      day: i,
+      month: month.format('MMMM'),
+      dateComplete: month.format('YYYY-MM') + '-' + addZero(i)
     };
     var html = template(context);
     $('.days').append(html);
   }
+}
+//funzione che aggiunge zero
+function addZero(num) {
+  if(num < 10) {
+    return '0' + num;
+  }
+  return num;
+}
+
+//funzione che stampa le festività
+function printHoliday(month) {
+  // console.log(month.month());
+  // console.log(month.year());
+  $.ajax(
+    {
+      url: 'https://flynn.boolean.careers/exercises/api/holidays',
+      method: 'GET',
+      data: {
+        year: month.year(),
+        month: month.month()
+      },
+      success: function (data) {
+        // console.log(data.response);
+        //variabile in cui dal server si hanno le festività con nome e data
+        var holidays = data.response;
+        //bisogna confrontare i giorni e se coincidon ocon le festività aggiungiamo la classe red
+
+        //ciclo sugli elementi di holidays
+        for (var i = 0; i < holidays.length; i++) {
+          var thisHoliday = holidays[i];
+          // console.log(thisHoliday);
+          var thisHolidayData = thisHoliday.date;
+
+          //metodo con data attr
+          $('li[data-date-complete="'+ thisHolidayData  +'"]').addClass('red');
+          $('li[data-date-complete="'+ thisHolidayData  +'"]').find('.nome-festivita').append(thisHoliday.name);
+          // 'li[data-date-complete="2018-01-01"]'
+        }
+      },
+      error: function () {
+        alert('errore');
+      }
+    }
+  );
 }
